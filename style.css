@@ -153,16 +153,13 @@ main {
   transform: translateX(-50%);
   height: 10rem;
 }
-
 .player--winner {
   background-color: #2f2f2f;
 }
-
 .player--winner .name {
   font-weight: 700;
   color: #d50b0b;
 }
-
 .hidden {
   display: none;
 }

@@ -1,5 +1,4 @@
 'use strict';
-
 //var
 let randomDice = 0;
 let currentScore = 0;

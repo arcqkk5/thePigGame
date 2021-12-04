@@ -79,3 +79,20 @@ btnHold.addEventListener('click', function () {
     }
   }
 });
+
+btnGame.addEventListener('click', function () {
+  for (let i = 0; i < totalScore.length; i++) {
+    totalScore[i] = 0;
+    document.getElementById(`score--${i}`).textContent = 0;
+    document.getElementById(`current--${i}`).textContent = 0;
+  }
+  currentScore = 0;
+  document
+    .querySelector(`.player--${activPlayer}`)
+    .classList.remove('player--winner');
+  activPlayer = 0;
+  document
+    .querySelector(`.player--${activPlayer}`)
+    .classList.add('player--active');
+  isPlay = true;
+});

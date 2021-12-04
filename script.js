@@ -7,6 +7,9 @@ let currentScore = 0;
 let activPlayer = 0;
 const totalScore = [0, 0];
 
+//isPlay
+let isPlay = true;
+
 // player
 const player0 = document.querySelector('.player--0');
 const player1 = document.querySelector('.player--1');
@@ -30,22 +33,49 @@ const btnHold = document.querySelector('.btn--hold');
 const diceElement = document.querySelector('.dice');
 diceElement.classList.add('hidden');
 
+const switchActivePlayer = function () {
+  currentScore = 0;
+  document.getElementById(`current--${activPlayer}`).textContent = currentScore;
+  activPlayer = Math.abs(activPlayer - 1);
+  player0.classList.toggle('player--active');
+  player1.classList.toggle('player--active');
+};
+
 //roll the dice
 btnRoll.addEventListener('click', function () {
-  randomDice = Math.trunc(Math.random() * 6) + 1;
-  diceElement.classList.remove('hidden');
-  diceElement.src = `image/dice${randomDice}.png`;
+  if (isPlay) {
+    randomDice = Math.trunc(Math.random() * 6) + 1;
+    diceElement.classList.remove('hidden');
+    diceElement.src = `image/dice${randomDice}.png`;
 
-  if (randomDice !== 1) {
-    currentScore += randomDice;
-    document.getElementById(`current--${activPlayer}`).textContent =
-      currentScore;
-  } else {
-    currentScore = 0;
-    document.getElementById(`current--${activPlayer}`).textContent =
-      currentScore;
-    activPlayer = Math.abs(activPlayer - 1);
-    player0.classList.toggle('player--active');
-    player1.classList.toggle('player--active');
+    if (randomDice !== 1) {
+      currentScore += randomDice;
+      document.getElementById(`current--${activPlayer}`).textContent =
+        currentScore;
+    } else {
+      switchActivePlayer();
+    }
+  }
+});
+
+btnHold.addEventListener('click', function () {
+  if (isPlay) {
+    totalScore[activPlayer] += currentScore;
+    document.getElementById(`score--${activPlayer}`).textContent =
+      totalScore[activPlayer];
+
+    if (totalScore[activPlayer] >= 20) {
+      isPlay = false;
+      document
+        .querySelector(`.player--${activPlayer}`)
+        .classList.add('player--winner');
+      document
+        .querySelector(`.player--${activPlayer}`)
+        .classList.remove('player--active');
+
+      diceElement.classList.add('hidden');
+    } else {
+      switchActivePlayer();
+    }
   }
 });
